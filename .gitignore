@@ -1,0 +1,26 @@
+# Checkpoints and outputs
+Summaries/
+logs/
+results/
+
+# Dataset files (large)
+dataset/*.h5
+dataset/tvsum/*.h5
+dataset/summe/*.h5
+dataset/ydata-anno.tsv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+ignore
