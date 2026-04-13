@@ -1,6 +1,9 @@
-# SummDiff: Diffusion-based Video Summarization
+# SummDiff: Generative Modeling of Video Summarization with Diffusion (ICCV 2025)
 
-This repository contains the official implementation of **SummDiff**, a diffusion-based approach to video summarization. SummDiff formulates importance score prediction as a denoising process, leveraging a diffusion model conditioned on video features to generate frame-level saliency scores.
+[Paper](https://openaccess.thecvf.com/content/ICCV2025/papers/Kim_SummDiff_Generative_Modeling_of_Video_Summarization_with_Diffusion_ICCV_2025_paper.pdf)
+[Arxiv](https://arxiv.org/abs/2510.08458)
+
+This repository contains the official implementation of **SummDiff: Generative Modeling of Video Summarization with Diffusion**, a diffusion-based approach to video summarization. Our method formulates importance score prediction as a denoising process, leveraging a diffusion model conditioned on video features to generate frame-level importance scores.
 
 ## Overview
 
