@@ -26,9 +26,9 @@
   <p align="center">
     Seoul National University
   </p>
-  <p align="center">
+  <!-- <p align="center">
     <sup>*</sup>Equal Contribution. <sup>†</sup>Corresponding Author.
-  </p>
+  </p> -->
 </p>
 
 
