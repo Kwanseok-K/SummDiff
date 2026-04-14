@@ -139,6 +139,7 @@ class Transformer(nn.Module):
     def __init__(self, d_model=512, nhead=8, num_encoder_layers=6,
                  num_decoder_layers=6, dim_feedforward=2048, dropout=0.1,
                  activation="relu", normalize_before=False,
+                 return_intermediate_dec=False,
                  K=200,
                  denoiser='DiT',
                  p_uncond=0.2,
@@ -163,9 +164,16 @@ class Transformer(nn.Module):
         elif denoiser == 'latentmlp':
             diff_layer = SimpleMLP(d_model, d_model, d_model, d_model, d_model, num_decoder_layers, 0.1, True, d_model)
         decoder_norm = nn.LayerNorm(d_model)
-        self.diffusion_decoder = DiffDecoder(diff_layer, num_decoder_layers, decoder_norm,
-                                          d_model=d_model, K=K, scores_embed=scores_embed,
-                                          denoiser=denoiser)
+        self.diffusion_decoder = DiffDecoder(
+            diff_layer,
+            num_decoder_layers,
+            decoder_norm,
+            return_intermediate=return_intermediate_dec,
+            d_model=d_model,
+            K=K,
+            scores_embed=scores_embed,
+            denoiser=denoiser,
+        )
 
 
         # build diffusion

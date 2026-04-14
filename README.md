@@ -1,7 +1,36 @@
 # SummDiff: Generative Modeling of Video Summarization with Diffusion (ICCV 2025)
 
-[Paper](https://openaccess.thecvf.com/content/ICCV2025/papers/Kim_SummDiff_Generative_Modeling_of_Video_Summarization_with_Diffusion_ICCV_2025_paper.pdf)
+> Official PyTorch implementation of ***"SummDiff: Generative Modeling of Video Summarization with Diffusion"***.
+
+
+<!-- ## Kwanseok Kim, Jaehoon Hahm, Sumin Kim, Jinhwan Sul, Byunghak Kim, Joonseok Lee -->
+<!-- [Paper](https://openaccess.thecvf.com/content/ICCV2025/papers/Kim_SummDiff_Generative_Modeling_of_Video_Summarization_with_Diffusion_ICCV_2025_paper.pdf)
 [Arxiv](https://arxiv.org/abs/2510.08458)
+[Project Page](https://jaehoon-hahm.github.io/summdiff-page/) -->
+
+<p align="center">
+  <a href="https://jaehoon-hahm.github.io/summdiff-page/"><img src="https://img.shields.io/badge/Project-Page-4A90E2?style=flat&logo=Google%20chrome&logoColor=white"></a>&nbsp;&nbsp;&nbsp;
+  <a href="https://arxiv.org/abs/2510.08458"><img src="https://img.shields.io/badge/Arxiv-2603.01169-A42C25?style=flat&logo=arXiv&logoColor=A42C25"></a>&nbsp;&nbsp;&nbsp;
+  <a href="https://openaccess.thecvf.com/content/ICCV2025/papers/Kim_SummDiff_Generative_Modeling_of_Video_Summarization_with_Diffusion_ICCV_2025_paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-yellow?style=flat&logo=arXiv&logoColor=yellow"></a>
+</p>
+
+<p align="center">
+  <p align="center">
+    <a href="https://scholar.google.com/citations?user=HppyDwIAAAAJ&hl=en" target='_blank'>Kwanseok Kim</a><sup>*</sup>&emsp;
+    <a href="https://jaehoon-hahm.github.io/" target='_blank'>Jaehoon Hahm</a><sup>*</sup>&emsp;
+    <a href="https://scholar.google.com/citations?user=-CnUimcAAAAJ&hl" target='_blank'>Sumin Kim</a>&emsp;
+    <a href="https://scholar.google.com/citations?user=kmXfNc4AAAAJ&hl=en" target='_blank'>Jinhwan Sul</a>&emsp;
+    <a href="https://hakkim.tech/" target='_blank'>Byunghak Kim</a>&emsp;
+    <a href="http://www.joonseok.net/home.html" target='_blank'>Joonseok Lee</a><sup>†</sup>
+  </p>
+  <p align="center">
+    Seoul National University
+  </p>
+  <p align="center">
+    <sup>*</sup>Equal Contribution. <sup>†</sup>Corresponding Author.
+  </p>
+</p>
+
 
 This repository contains the official implementation of **SummDiff: Generative Modeling of Video Summarization with Diffusion**, a diffusion-based approach to video summarization. Our method formulates importance score prediction as a denoising process, leveraging a diffusion model conditioned on video features to generate frame-level importance scores.
 
@@ -16,11 +45,11 @@ SummDiff introduces a novel diffusion-based framework for video summarization th
 
 ## Results
 
-### MrHiSum
+### SumMe 
 
 | Method | KTau | SRho |
 |--------|------|------|
-| SummDiff | **0.175** | **0.238** |
+| SummDiff | **0.256** | **0.285** |
 
 ### TVSum 
 
@@ -28,50 +57,42 @@ SummDiff introduces a novel diffusion-based framework for video summarization th
 |--------|------|------|
 | SummDiff | **0.195** | **0.255** |
 
-### SumMe 
+### MrHiSum
 
 | Method | KTau | SRho |
 |--------|------|------|
-| SummDiff | **0.256** | **0.285** |
+| SummDiff | **0.175** | **0.238** |
 
-## Installation
 
-### Requirements
-
-- Python >= 3.8
-- PyTorch >= 1.12.0
-- CUDA (recommended)
+## Environment Setup
 
 ```bash
 # Create conda environment
-conda create -n summdiff python=3.8
+conda create -n summdiff python=3.10
 conda activate summdiff
 
 # Install PyTorch (adjust CUDA version as needed)
-pip install torch torchvision
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
-## Dataset Preparation
+## Dataset Download
 
 ### TVSum
 
 1. Download the preprocessed h5 file from the [PGL-SUM](https://github.com/e-apostolidis/PGL-SUM) repository (`data/` folder) or use the version provided in this repo:
    ```
-   dataset/tvsum/eccv16_dataset_tvsum_google_pool5.h5
+   dataset/tvsum/eccv16_dataset_tvsum_google_pool5.rar
    ```
-   The h5 file contains pre-extracted GoogLeNet Pool5 features, change points, ground truth scores, and user summaries. The features were originally extracted by [Ke Zhang](https://github.com/kezhang-cs) and the h5 files were obtained from [Kaiyang Zhou](https://github.com/KaiyangZhou/pytorch-vsumm-reinforce).
-
-2. Download the TVSum annotation file `ydata-tvsum50.tsv` from the [TVSum dataset page](https://github.com/yalesong/tvsum):
-   ```bash
-   # Place as:
-   dataset/ydata-anno.tsv
+   Then extract it to get eccv16_dataset_tvsum_google_pool5.h5 file using the following command:
    ```
-   This file contains per-user frame-level importance scores used for Kendall's Tau and Spearman's Rho evaluation.
+   bsdtar -xf dataset/summe/eccv16_dataset_tvsum_google_pool5.rar
+   ```
+   The h5 file contains pre-extracted GoogLeNet Pool5 features, change points, ground truth scores, and user summaries. 
 
-3. The train/test splits are already included:
+2. The train/test splits are already included:
    ```
    dataset/tvsum_splits.txt    # 5-fold cross-validation splits
    ```
@@ -80,7 +101,11 @@ pip install -r requirements.txt
 
 1. Download the preprocessed h5 file from the [PGL-SUM](https://github.com/e-apostolidis/PGL-SUM) repository (`data/` folder) or use the version provided in this repo:
    ```
-   dataset/summe/eccv16_dataset_summe_google_pool5.h5
+   dataset/summe/eccv16_dataset_summe_google_pool5.rar
+   ```
+   Then extract it to get eccv16_dataset_summe_google_pool5.h5 file using the following command:
+   ```
+   bsdtar -xf dataset/summe/eccv16_dataset_summe_google_pool5.rar
    ```
 
 2. The train/test splits are already included:
@@ -90,7 +115,7 @@ pip install -r requirements.txt
 
 ### MrHiSum
 
-1. Download the MrHiSum dataset h5 file (contains pre-extracted features, ground truth scores, change points, and ground truth summaries).
+1. Download the MrHiSum dataset h5 file [Mr.HiSum](https://github.com/MRHiSum/MR.HiSum). It contains pre-extracted features, ground truth scores, change points, and ground truth summaries. To download the h5 file, refer to [TripleSumm](https://github.com/smkim37/TripleSumm).
 
 2. Specify the path via `--data_path`:
    ```bash

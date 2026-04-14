@@ -5,8 +5,8 @@ results/
 
 # Dataset files (large)
 dataset/*.h5
-dataset/tvsum/*.h5
-dataset/summe/*.h5
+dataset/tvsum/
+dataset/summe/
 dataset/ydata-anno.tsv
 
 # Python
